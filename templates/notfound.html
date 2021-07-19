@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notfound.css') }}">
+    <title>Not Found</title>
+{% endblock %}
+
+{% block content %}
+    <h2 class="msg">Dont know what you were looking for 🤷‍♂️</h2>
+{% endblock %}

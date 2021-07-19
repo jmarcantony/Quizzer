@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/success.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="success">
+        <h1 class="msg">Successfully created quiz!</h1>
+        <button class="btn btn-outline-warning btn-lg" onclick="returnToDashboard()">Return to dashboard</button>    
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/success.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <script src="https://kit.fontawesome.com/109e0101fe.js" crossorigin="anonymous"></script>
+    <title>{{ user.username }}'s Dashboard</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="quizes-title">You're Quizes:</h1>
+    <div class="created-quizes">
+        {% if own_quizes%}
+            <center>
+                {% for quiz in own_quizes %}
+                    <div class="quiz" id="quiz{{ quiz.id }}">
+                        <div class="thumbnail">
+                            <img src="{{ quiz.thumbnail }}" alt="Thumbnail">
+                        </div>
+                        <h4>Name: {{ quiz.name }}</h4>
+                        <p>Author: {{ quiz.author }}</p>
+                    </div>
+                {% endfor %}
+            </center>
+        {% else %}
+            <h3 class="no-quizes">You haven't created any quizes yet!</h3>
+        {% endif %}
+    </div>
+    <div class="create" onclick="create()" id="create"><i class="fas fa-pencil-alt"></i></div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

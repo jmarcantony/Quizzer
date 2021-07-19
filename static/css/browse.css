@@ -1,0 +1,41 @@
+.quizes {
+    text-align: center;
+}
+
+.quiz {
+    display: inline-block;
+    padding: 0.5em;
+    border-radius: 15px;
+    border: 2px solid rebeccapurple;
+    margin: 1em;
+    color: #03071e;
+}
+
+.thumbnail img {
+    width: 30vw;
+    height: 25vh;
+}
+
+#footer {
+    position: relative;
+    bottom: -19vh;
+}
+
+.hover {
+    /* position: absolute; */
+    position: relative;
+    top: -5vh;
+    visibility: hidden;
+}
+
+.quiz:hover {
+    background-color: rebeccapurple;
+    color: rebeccapurple;
+}
+
+.no-quiz {
+    position: relative;
+    top: 30vh;
+    font-family: 'Zen Dots', cursive;
+    color: #03071e;
+}

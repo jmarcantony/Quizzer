@@ -1,0 +1,24 @@
+.signup-box {
+    border: 2px solid rebeccapurple;
+    border-radius: 10px;
+    position: relative;
+    padding: 3.5em;
+    width: calc(65 / 100 * 100vw);
+    height: calc(55 / 100 * 100vh);
+    top: 5vh;
+    left: 17vw;
+}
+
+input {
+    margin-bottom: 2em;
+    color: #03071e;
+    outline-style: none;
+    padding: 0.5em;
+    width: 40vw;
+}
+
+.return-login {
+    position: relative;
+    top: 10vh;
+    /* left: 43vw; */
+}

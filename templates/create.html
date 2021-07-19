@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create.css') }}">
+    <title>Create Quiz</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="description">Create a Quiz</h1>
+    <div class="create-form">
+        <form action="/create" method="POST">
+            <input type="text" name="quiz_name" placeholder="Name of the Quiz" required>
+            <br>
+            <input type="text" name="thumbnail" placeholder="URL for the Quiz Thumbnail (Optional)">
+            <br>
+            <button type="submit" class="btn btn-outline-warning btn-lg">Create</button>
+        </form>
+    </div>
+{% endblock %}

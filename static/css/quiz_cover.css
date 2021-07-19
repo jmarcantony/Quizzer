@@ -1,0 +1,23 @@
+.box {
+    text-align: center;
+    position: relative;
+    top: 2vh;
+}
+
+.thumbnail {
+    width: 30em;
+    height: 16.375em;
+    border-radius: 10px;
+}
+
+.box * {
+    margin: 0.5em;
+}
+
+.name {
+    color: #03071e;
+}
+
+.author {
+    color: #03071e;
+}

@@ -1,0 +1,45 @@
+.login {
+    position: relative;
+    margin: 0;
+    top: 5vh;
+    left: 46.5vw;
+    color: #03071e;
+}
+
+.error-message {
+    display: inline-block;
+    color: red;
+}
+
+.err-center {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 24vw;
+    top: 5vh;
+}
+
+.login-box {
+    border: 2px solid rebeccapurple;
+    border-radius: 10px;
+    position: relative;
+    padding: 5em;
+    width: calc(65 / 100 * 100vw);
+    height: calc(45 / 100 * 100vh);
+    top: 10vh;
+    left: 17vw;
+}
+
+input {
+    margin-bottom: 2em;
+    color: #03071e;
+    outline-style: none;
+    padding: 0.5em;
+    width: 40vw;
+}
+
+.create-account {
+    position: relative;
+    top: 15vh;
+    left: 43vw;
+}

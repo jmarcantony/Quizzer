@@ -1,0 +1,58 @@
+.quizes {
+    text-align: center;
+}
+
+.quiz {
+    display: inline-block;
+    padding: 0.5em;
+    border-radius: 15px;
+    border: 2px solid rebeccapurple;
+    margin: 1em;
+    color: #03071e;
+}
+
+.thumbnail {
+    margin-bottom: 1rem;
+}
+
+.thumbnail img {
+    width: 30vw;
+    height: 25vh;
+    border-radius: 10px;
+}
+
+.quizes-title {
+    color: #03071e;
+    margin: 1em;
+}
+
+.no-quizes {
+    color: #03071e;
+    position: relative;
+    left: 10vw;
+}
+
+.create {
+    position: relative;
+    text-align: end;
+    margin: 1em;
+    font-size: larger;
+    color: #03071e;
+    top: 40vh;
+}
+
+.fas {
+    width: 3em;
+    height: 3em;
+    text-align: center;
+    border-radius: 100%;
+    border: 2px solid #03071e;
+    padding: 0.5em;
+    padding-top: 0.9em;
+    transition: 250ms;
+}
+
+.fas:hover {
+    background-color: #03071e;
+    color: white;
+}

@@ -1,0 +1,50 @@
+html {
+    overflow-x: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;;
+}
+
+.logo {
+    font-family: 'Zen Dots', cursive;
+    cursor: pointer;
+}
+
+.logo:hover {
+    color: #03071e
+}
+
+#header {
+    background-color: rebeccapurple;
+    color: white;
+    height: 12vh;
+    padding: 0.5em;
+}
+
+.nav-items a{
+    font-size: x-large;
+    color: white;
+    text-decoration: none;
+    margin-right: 1em;
+}
+
+.nav-items a:hover {
+    color: #03071e;
+}
+
+#footer {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    text-align: center;
+    padding: 1em;
+    margin-top: 1em;
+}
+
+#footer p {
+    font-family: 'Zen Dots', cursive;
+}

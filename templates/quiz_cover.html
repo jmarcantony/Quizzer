@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz_cover.css') }}">
+    <title>{{ quiz.name }}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <img src="{{ quiz.thumbnail }}" alt="thumbnail" class="thumbnail">
+        <h1 class="name">Name: {{ quiz.name }}</h1>
+        <h2 class="author">Author: {{ quiz.author }}</h2>
+        <button class="btn btn-outline-warning btn-lg">Start</button>
+    </div>
+{% endblock %}

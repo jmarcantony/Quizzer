@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create-account.css') }}">
+    <title>Create Account</title>
+{% endblock %}
+
+{% block content %}
+    <div class="signup-box">
+        <center>
+            <form action="/create-account" method="POST" id="login-form">
+                <input required type="text" name="username" placeholder="Username">
+                <br>
+                <input required type="password" oninput="checkMatch()" name="password" placeholder="Password" id="password">
+                <br>
+                <input required type="password" oninput="checkMatch()" name="retype-password" placeholder="Retype Password" id="retyped_password">
+                <br>
+                <button type="submit" class="btn btn-outline-warning btn-lg" id="submit">Create Account</button>
+            </form>
+        </center>
+    </div>
+    <center>
+        <p class="return-login">Return to <a href="/login">Login Page</a></p>
+    </center>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/create-account.js') }}"></script>
+{% endblock %}

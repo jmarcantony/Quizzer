@@ -1,0 +1,16 @@
+.msg-box {
+    text-align: center;
+    position: relative;
+    top: 25vh;
+    margin: 1em;
+    padding: 1em;
+}
+
+.msg {
+    color: #03071e;
+    margin-bottom: 1em;
+}
+
+.home {
+    margin-right: 1em;
+}

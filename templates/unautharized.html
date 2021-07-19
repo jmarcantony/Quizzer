@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block head%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/unauthorized.css') }}">
+    <title>Unauthorized Access</title>
+{% endblock %}
+
+{% block content %}
+    <div class="msg-box">
+        <h2 class="msg">You are not allowed in here 😑</h2>
+        <button class="btn btn-outline-warning btn-lg home" onclick="goHome()">Return Home</button>
+        <button class="btn btn-outline-warning btn-lg" onclick="Login()">Login</button>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/unauthorized.js') }}"></script>
+{% endblock %}

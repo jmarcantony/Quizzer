@@ -1,0 +1,10 @@
+.success {
+    position: relative;
+    top: 30vh;
+    text-align: center;
+}
+
+.msg {
+    color: #03071e;
+    margin-bottom: 1em;
+}

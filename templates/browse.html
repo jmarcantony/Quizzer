@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/browse.css') }}">
+    <title>Browse</title>
+{% endblock %}
+
+{% block content %}
+    <div class="quizes">
+        {% if quizes %}
+            {% for quiz in quizes %}
+                <div class="quiz" id="quiz{{ quiz.id }}" onmouseover="hover({{ quiz.id }})" onmouseout="undo({{ quiz.id }})" onclick="start({{ quiz.id }})">
+                    <div class="thumbnail">
+                        <img src="{{ quiz.thumbnail }}" id="{{ quiz.id }}" alt="Thumbnail">
+                    </div>
+                    <div class="hover" id="hover{{ quiz.id }}">
+                            <h1>Start</h1>
+                    </div>
+                    <h4>Name: {{ quiz.name }}</h4>
+                    <p>Author: {{ quiz.author }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <center>
+                <h1 class="no-quiz">No Quizes are Created yet 🤷‍♂️</h1>
+            </center>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/browse.js') }}"></script>
+{% endblock %}

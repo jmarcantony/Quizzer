@@ -1,0 +1,29 @@
+.description {
+    color: #03071e;
+    position: relative;
+    margin-top: 1em;
+    left: 40vw;
+}
+
+.create-form {
+    border: 2px solid #03071e;
+    text-align: center;
+    width: calc(75 / 100 * 100vw);
+    height: calc(50 / 100 * 100vh);
+    position: relative;
+    left: calc(25 / 100 / 2 * 100vw);
+    top: 5vh;
+    border-radius: 10px;
+}
+
+.create-form form {
+    position: relative;
+    top: 10vh;
+}
+
+input {
+    padding: 0.5em;
+    margin: 1em;
+    width: calc(75 / 100 * (75 / 100 * 100vw));
+    color: #03071e;
+}
