@@ -1,6 +1,6 @@
 import datetime
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_required, logout_user, current_user, login_user, LoginManager, UserMixin
 
@@ -73,23 +73,24 @@ def browse():
 
 @app.route("/create-account", methods=["GET", "POST"])
 def create_account():
-    if request.method == "GET":
-        return render_template("create-account.html", year=year)
-    else:
+    if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         retyped_password = request.form["retype-password"]
         if password == retyped_password:
             if not User.query.filter_by(username=username).first():
-                new_user = User(username=username, password=generate_password_hash(password, method="sha256"))
+                new_user = User(username=username, password=generate_password_hash(password, method="sha256", salt_length=8))
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user)
                 return redirect(url_for("dashboard"))
             else:
-                return "User already exists!"
+                flash("User already exists!", "danger")
         else:
-            return "Passwords do not match!"
+            flash("Passwords do not match!")    
+        return redirect(url_for('create_account'))
+    
+    return render_template("create-account.html", year=year)
 
 @app.route("/logout")
 @login_required
