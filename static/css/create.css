@@ -1,8 +1,7 @@
 .description {
     color: #03071e;
-    position: relative;
     margin-top: 1em;
-    left: 40vw;
+    text-align: center;
 }
 
 .create-form {

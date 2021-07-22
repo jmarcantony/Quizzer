@@ -9,6 +9,7 @@
     border: 2px solid rebeccapurple;
     margin: 1em;
     color: #03071e;
+    transition: 250ms;
 }
 
 .thumbnail img {

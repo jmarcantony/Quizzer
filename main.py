@@ -117,7 +117,7 @@ def create():
         thumbnail = request.form["thumbnail"]
         author = User.query.get(int(current_user.get_id())).username
         if thumbnail.strip() == "":
-            thumbnail = "https://blog.sli.do/wp-content/uploads/2020/04/blog-slido-virtual-quiz-setup-header.jpg"
+            thumbnail = "https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_960_720.jpg"
         new_quiz = Quiz(name=name, thumbnail=thumbnail, author=author)
         db.session.add(new_quiz)
         db.session.commit()

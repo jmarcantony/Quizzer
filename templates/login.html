@@ -9,11 +9,11 @@
 {% block content %}
     <h1 class="login">Login</h1>
     <div class="login-box">
-        <center class="err-center">
-            {% if error %}
+        {% if error %}
+            <center class="err-center">
                 <p class="error-message">{{ error }}</p>
-            {% endif %}
-        </center>
+            </center>
+        {% endif %}
         <center>
             <form action="/login" method="POST" id="login-form">
                 <input required type="text" name="username" placeholder="Username" id="username">

@@ -2,12 +2,13 @@
     position: relative;
     margin: 0;
     top: 5vh;
-    left: 46.5vw;
+    text-align: center;
     color: #03071e;
 }
 
 .error-message {
     display: inline-block;
+    bottom: 7vh;
     color: red;
 }
 
@@ -27,7 +28,7 @@
     width: calc(65 / 100 * 100vw);
     height: calc(45 / 100 * 100vh);
     top: 10vh;
-    left: 17vw;
+    margin: auto;
 }
 
 input {
@@ -41,5 +42,5 @@ input {
 .create-account {
     position: relative;
     top: 15vh;
-    left: 43vw;
+    text-align: center;
 }
