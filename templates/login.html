@@ -7,13 +7,17 @@
 {% endblock %}
 
 {% block content %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert"> {{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
     <h1 class="login">Login</h1>
     <div class="login-box">
-        {% if error %}
-            <center class="err-center">
-                <p class="error-message">{{ error }}</p>
-            </center>
-        {% endif %}
         <center>
             <form action="/login" method="POST" id="login-form">
                 <input required type="text" name="username" placeholder="Username" id="username">
