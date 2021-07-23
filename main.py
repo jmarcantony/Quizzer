@@ -20,6 +20,8 @@ class Quiz(db.Model):
     name = db.Column(db.String(50), unique=False, nullable=False)
     author = db.Column(db.String(50), unique=False, nullable=False)
     thumbnail = db.Column(db.String(800), unique=False, nullable=False)
+    total_questions = db.Column(db.Integer, unique=False, nullable=False)
+    questions = db.Column(db.PickleType, unique=False, nullable=False)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -118,10 +120,29 @@ def create():
         author = User.query.get(int(current_user.get_id())).username
         if thumbnail.strip() == "":
             thumbnail = "https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_960_720.jpg"
-        new_quiz = Quiz(name=name, thumbnail=thumbnail, author=author)
-        db.session.add(new_quiz)
-        db.session.commit()
-        return render_template("success.html", year=year, logged_in=True)
+        return redirect(url_for("create_questions", name=name, thumbnail=thumbnail, author=author))
+        # name = request.form["quiz_name"]
+        # thumbnail = request.form["thumbnail"]
+        # author = User.query.get(int(current_user.get_id())).username
+        # if thumbnail.strip() == "":
+            # thumbnail = "https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_960_720.jpg"
+        # new_quiz = Quiz(name=name, thumbnail=thumbnail, author=author)
+        # db.session.add(new_quiz)
+        # db.session.commit()
+        # return render_template("success.html", year=year, logged_in=True)
+
+@app.route("/create-questions", methods=["GET", "POST"])
+@login_required
+def create_questions():
+    if request.method == "GET":
+        is_logged_in = current_user.is_authenticated
+        name = request.args.get("name")
+        thumbnail = request.args.get("thumbnail")
+        author = request.args.get("author")
+        if User.query.get(int(current_user.get_id())).username != author:
+            return render_template("notfound.html", year=year, logged_in=is_logged_in), 404
+        return render_template("create-questions.html", year=year, logged_in=is_logged_in) 
+    
 
 @app.route("/quiz/<int:id>")
 @login_required

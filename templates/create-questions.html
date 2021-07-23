@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/create-questions.css') }}">
+{% endblock %}
+
+{% block scripts %}
+	{{ super() }}
+	<script src="{{ url_for('static', filename='js/create-questions.js') }}"></script>
+{% endblock %}
