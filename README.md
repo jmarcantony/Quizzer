@@ -16,3 +16,7 @@ Quiz Web App with Python 🌐
 * `cd Quizzer`
 * `pip3 install -r requirements.txt`
 * `python3 main.py`
+
+# Todos:
+- [ ] Add functionality to make quiz
+- [ ] Add functionality to play quiz
