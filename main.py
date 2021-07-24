@@ -51,8 +51,7 @@ def unauthorized():
 # ROUTES
 @app.route("/")
 def home():
-    is_logged_in = current_user.is_authenticated
-    return render_template("index.html", year=year, logged_in=is_logged_in)
+    return render_template("index.html", year=year)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -116,13 +115,12 @@ def logout():
 @login_required
 def dashboard():
     own_quizes = Quiz.query.filter_by(author=current_user.username).all()
-    return render_template("dashboard.html", year=year, is_dashboard=True, logged_in=True, user=current_user, own_quizes=own_quizes)
+    return render_template("dashboard.html", year=year, is_dashboard=True, own_quizes=own_quizes)
 
 
 @app.route("/browse")
 def browse():
-    quizes = Quiz.query.all()
-    return render_template("browse.html", year=year, quizes=quizes)
+    return render_template("browse.html", year=year, quizes=Quiz.query.all())
 
 
 @app.route("/create", methods=["GET", "POST"])

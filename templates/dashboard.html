@@ -4,7 +4,7 @@
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
     <script src="https://kit.fontawesome.com/109e0101fe.js" crossorigin="anonymous"></script>
-    <title>{{ user.username }}'s Dashboard</title>
+    <title>{{ current_user.username }}'s Dashboard</title>
 {% endblock %}
 
 {% block content %}
