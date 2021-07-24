@@ -16,9 +16,9 @@
         <nav class="navbar">
             <h1 class="logo" onclick="home()">Quizzer</h1>
             <div class="nav-items">
-                {% if logged_in and is_dashboard%}
+                {% if current_user.is_authenticated and is_dashboard%}
                     <a href="/logout">Sign Out</a>
-                {% elif logged_in %}
+                {% elif current_user.is_authenticated %}
                     <a href="/dashboard">Dashboard</a>
                 {% else %}
                     <a href="/login">Login</a>

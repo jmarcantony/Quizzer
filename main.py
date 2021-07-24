@@ -115,29 +115,25 @@ def logout():
 @app.route("/dashboard")
 @login_required
 def dashboard():
-    user = User.query.get(int(current_user.get_id()))
-    username = user.username
-    own_quizes = Quiz.query.filter_by(author=username).all()
-    return render_template("dashboard.html", year=year, is_dashboard=True, logged_in=True, user=user, own_quizes=own_quizes)
+    own_quizes = Quiz.query.filter_by(author=current_user.username).all()
+    return render_template("dashboard.html", year=year, is_dashboard=True, logged_in=True, user=current_user, own_quizes=own_quizes)
 
 
 @app.route("/browse")
 def browse():
     quizes = Quiz.query.all()
-    is_logged_in = current_user.is_authenticated
-    return render_template("browse.html", year=year, quizes=quizes, logged_in=is_logged_in)
+    return render_template("browse.html", year=year, quizes=quizes)
 
 
 @app.route("/create", methods=["GET", "POST"])
 @login_required
 def create():
     if request.method == "GET":
-        is_logged_in = current_user.is_authenticated
-        return render_template("create.html", year=year, logged_in=is_logged_in)
+        return render_template("create.html", year=year)
     else:
         name = request.form["quiz_name"]
         thumbnail = request.form["thumbnail"]
-        author = User.query.get(int(current_user.get_id())).username
+        author = current_user.username
         if thumbnail.strip() == "":
             thumbnail = "https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_960_720.jpg"
         return redirect(url_for("create_questions", name=name, thumbnail=thumbnail, author=author))
@@ -156,31 +152,28 @@ def create():
 @login_required
 def create_questions():
     if request.method == "GET":
-        is_logged_in = current_user.is_authenticated
         name = request.args.get("name")
         thumbnail = request.args.get("thumbnail")
         author = request.args.get("author")
-        if User.query.get(int(current_user.get_id())).username != author:
-            return render_template("notfound.html", year=year, logged_in=is_logged_in), 404
-        return render_template("create-questions.html", year=year, logged_in=is_logged_in) 
+        if current_user.username != author:
+            return render_template("notfound.html", year=year), 404
+        return render_template("create-questions.html", year=year) 
     
 
 @app.route("/quiz/<int:id>")
 @login_required
 def start_quiz(id):
-    is_logged_in = current_user.is_authenticated
     quiz = Quiz.query.get(id)
     if quiz:
-        return render_template("quiz_cover.html", year=year, logged_in=is_logged_in, quiz=quiz)
+        return render_template("quiz_cover.html", year=year, quiz=quiz)
     else:
-        return render_template("notfound.html", year=year, logged_in=is_logged_in), 404
+        return render_template("notfound.html", year=year), 404
 
 
 # Error Handling
 @app.errorhandler(404)
 def not_found(e):
-    is_logged_in = current_user.is_authenticated
-    return render_template("notfound.html", year=year, logged_in=is_logged_in), 404
+    return render_template("notfound.html", year=year), 404
 
 
 if __name__ == "__main__":
