@@ -28,8 +28,8 @@ class Quiz(db.Model):
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100))
-    password = db.Column(db.String(100))
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
 
 
 db.create_all()
@@ -60,29 +60,25 @@ def login_page():
     if current_user.is_authenticated:
         return redirect(url_for("dashboard"))
 
-    if request.method == "GET":
-        return render_template("login.html", year=year)
-    else:
+    if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         user = User.query.filter_by(username=username).first()
         
-        # Check if user exists and credentials are valid
+        # Check if user exists
         if user:
             if check_password_hash(user.password, password):
                 login_user(user)
                 return redirect(url_for("dashboard"))
+            else:
+                # Redirect to login_page if credentials are invalid
+                flash("Invalid Username or Password", "danger")
+                return redirect(url_for('login_page'))       
+        else:
+            flash("That username does not exist. Sign up instead.", "danger")
+            return redirect(url_for('create_account'))
         
-        # Redirect to login_page if user does not exist or credentials are invalid
-        flash("Invalid Username or Password", "danger")
-        return redirect(url_for('login_page'))
-
-
-@app.route("/browse")
-def browse():
-    quizes = Quiz.query.all()
-    is_logged_in = current_user.is_authenticated
-    return render_template("browse.html", year=year, quizes=quizes, logged_in=is_logged_in)
+    return render_template("login.html", year=year)
 
 
 @app.route("/create-account", methods=["GET", "POST"])
@@ -91,6 +87,7 @@ def create_account():
         username = request.form["username"]
         password = request.form["password"]
         retyped_password = request.form["retype-password"]
+        
         if password == retyped_password:
             if not User.query.filter_by(username=username).first():
                 new_user = User(username=username, password=generate_password_hash(password, method="sha256", salt_length=8))
@@ -99,10 +96,11 @@ def create_account():
                 login_user(new_user)
                 return redirect(url_for("dashboard"))
             else:
-                flash("User already exists!", "danger")
+                flash("That user already exists! Log in instead.", "danger")
+                return redirect(url_for('login_page'))
         else:
             flash("Passwords do not match!")    
-        return redirect(url_for('create_account'))
+            return redirect(url_for('create_account'))
     
     return render_template("create-account.html", year=year)
 
@@ -121,6 +119,13 @@ def dashboard():
     username = user.username
     own_quizes = Quiz.query.filter_by(author=username).all()
     return render_template("dashboard.html", year=year, is_dashboard=True, logged_in=True, user=user, own_quizes=own_quizes)
+
+
+@app.route("/browse")
+def browse():
+    quizes = Quiz.query.all()
+    is_logged_in = current_user.is_authenticated
+    return render_template("browse.html", year=year, quizes=quizes, logged_in=is_logged_in)
 
 
 @app.route("/create", methods=["GET", "POST"])
