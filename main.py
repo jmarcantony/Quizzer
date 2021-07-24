@@ -1,9 +1,8 @@
-import datetime
+from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import login_required, logout_user, current_user, login_user, LoginManager, UserMixin
-
 
 # META VARIABLES
 app = Flask(__name__)
@@ -13,7 +12,12 @@ app.secret_key = "thisisasecret"
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-year = datetime.date.today().year
+
+
+# GET CURRENT YEAR
+@app.context_processor
+def inject_now():
+    return {'now': datetime.utcnow()}
 
 
 # DATABASE TABLES
@@ -45,13 +49,13 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return render_template("unautharized.html", year=year)
+    return render_template("unautharized.html")
 
 
 # ROUTES
 @app.route("/")
 def home():
-    return render_template("index.html", year=year)
+    return render_template("index.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -77,7 +81,7 @@ def login_page():
             flash("That username does not exist. Sign up instead.", "danger")
             return redirect(url_for('create_account'))
         
-    return render_template("login.html", year=year)
+    return render_template("login.html")
 
 
 @app.route("/create-account", methods=["GET", "POST"])
@@ -92,6 +96,7 @@ def create_account():
                 new_user = User(username=username, password=generate_password_hash(password, method="sha256", salt_length=8))
                 db.session.add(new_user)
                 db.session.commit()
+                
                 login_user(new_user)
                 return redirect(url_for("dashboard"))
             else:
@@ -101,7 +106,7 @@ def create_account():
             flash("Passwords do not match!")    
             return redirect(url_for('create_account'))
     
-    return render_template("create-account.html", year=year)
+    return render_template("create-account.html")
 
 
 @app.route("/logout")
@@ -115,19 +120,19 @@ def logout():
 @login_required
 def dashboard():
     own_quizes = Quiz.query.filter_by(author=current_user.username).all()
-    return render_template("dashboard.html", year=year, is_dashboard=True, own_quizes=own_quizes)
+    return render_template("dashboard.html", is_dashboard=True, own_quizes=own_quizes)
 
 
 @app.route("/browse")
 def browse():
-    return render_template("browse.html", year=year, quizes=Quiz.query.all())
+    return render_template("browse.html", quizes=Quiz.query.all())
 
 
 @app.route("/create", methods=["GET", "POST"])
 @login_required
 def create():
     if request.method == "GET":
-        return render_template("create.html", year=year)
+        return render_template("create.html")
     else:
         name = request.form["quiz_name"]
         thumbnail = request.form["thumbnail"]
@@ -154,8 +159,8 @@ def create_questions():
         thumbnail = request.args.get("thumbnail")
         author = request.args.get("author")
         if current_user.username != author:
-            return render_template("notfound.html", year=year), 404
-        return render_template("create-questions.html", year=year) 
+            return render_template("notfound.html"), 404
+        return render_template("create-questions.html") 
     
 
 @app.route("/quiz/<int:id>")
@@ -163,15 +168,15 @@ def create_questions():
 def start_quiz(id):
     quiz = Quiz.query.get(id)
     if quiz:
-        return render_template("quiz_cover.html", year=year, quiz=quiz)
+        return render_template("quiz_cover.html", quiz=quiz)
     else:
-        return render_template("notfound.html", year=year), 404
+        return render_template("notfound.html"), 404
 
 
 # Error Handling
 @app.errorhandler(404)
 def not_found(e):
-    return render_template("notfound.html", year=year), 404
+    return render_template("notfound.html"), 404
 
 
 if __name__ == "__main__":
