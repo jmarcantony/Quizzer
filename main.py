@@ -26,8 +26,8 @@ class Quiz(db.Model):
     name = db.Column(db.String(50), unique=False, nullable=False)
     author = db.Column(db.String(50), unique=False, nullable=False)
     thumbnail = db.Column(db.String(800), unique=False, nullable=False)
-    total_questions = db.Column(db.Integer, unique=False, nullable=False)
-    questions = db.Column(db.PickleType, unique=False, nullable=False)
+#    total_questions = db.Column(db.Integer, unique=False, nullable=False)
+#    questions = db.Column(db.PickleType, unique=False, nullable=False)
 
 
 class User(UserMixin, db.Model):
@@ -137,29 +137,33 @@ def create():
         author = current_user.username
         if thumbnail.strip() == "":
             thumbnail = "https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_960_720.jpg"
-        return redirect(url_for("create_questions", name=name, thumbnail=thumbnail, author=author))
-        # name = request.form["quiz_name"]
-        # thumbnail = request.form["thumbnail"]
-        # author = User.query.get(int(current_user.get_id())).username
-        # if thumbnail.strip() == "":
-            # thumbnail = "https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_960_720.jpg"
-        # new_quiz = Quiz(name=name, thumbnail=thumbnail, author=author)
-        # db.session.add(new_quiz)
-        # db.session.commit()
-        # return render_template("success.html", year=year, logged_in=True)
+        # UNCOMMENT BELOW AFTER DEV
+        # return redirect(url_for("create_questions", name=name, thumbnail=thumbnail, author=author))
+        # COMMENT BELOW AFTER DEV
+        name = request.form["quiz_name"]
+        thumbnail = request.form["thumbnail"]
+        author = User.query.get(int(current_user.get_id())).username
+        if thumbnail.strip() == "":
+            thumbnail = "https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_960_720.jpg"
+        new_quiz = Quiz(name=name, thumbnail=thumbnail, author=author)
+        db.session.add(new_quiz)
+        db.session.commit()
+        return render_template("success.html")
+        # COMMENT ABOVE AFTER DEV
     return render_template("create.html")
 
 
-@app.route("/create-questions", methods=["GET", "POST"])
-@login_required
-def create_questions():
-    if request.method == "GET":
-        name = request.args.get("name")
-        thumbnail = request.args.get("thumbnail")
-        author = request.args.get("author")
-        if current_user.username != author:
-            return render_template("notfound.html"), 404
-        return render_template("create-questions.html") 
+# UNCOMMENT AFTER FURTHER DEVELOPMENT
+# @app.route("/create-questions", methods=["GET", "POST"])
+# @login_required
+# def create_questions():
+    # if request.method == "GET":
+        # name = request.args.get("name")
+        # thumbnail = request.args.get("thumbnail")
+        # author = request.args.get("author")
+        # if current_user.username != author:
+            # return render_template("notfound.html"), 404
+        # return render_template("create-questions.html") 
     
 
 @app.route("/quiz/<int:id>")
@@ -167,7 +171,7 @@ def create_questions():
 def start_quiz(id):
     quiz = Quiz.query.get(id)
     if quiz:
-        return render_template("quiz_cover.html", quiz=quiz)
+        return render_template("play_quiz.html", quiz=quiz)
     else:
         return render_template("notfound.html"), 404
 
