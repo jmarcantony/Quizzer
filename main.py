@@ -131,9 +131,7 @@ def browse():
 @app.route("/create", methods=["GET", "POST"])
 @login_required
 def create():
-    if request.method == "GET":
-        return render_template("create.html")
-    else:
+    if request.method == "POST":
         name = request.form["quiz_name"]
         thumbnail = request.form["thumbnail"]
         author = current_user.username
@@ -149,6 +147,7 @@ def create():
         # db.session.add(new_quiz)
         # db.session.commit()
         # return render_template("success.html", year=year, logged_in=True)
+    return render_template("create.html")
 
 
 @app.route("/create-questions", methods=["GET", "POST"])
