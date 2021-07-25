@@ -1,3 +1,33 @@
+#selected {
+    background-color: #03071e;
+    border: none;
+    color: white;
+}
+
+#buttons {
+    text-align: center;
+}
+
+.control {
+    margin: 1rem;
+    border: 1px solid #03071e;
+    background-color: white;
+    color: #03071e;
+}
+
+.control:first-child {
+    border-radius: 100%;
+}
+
+.control:last-child {
+    border-radius: 100%;
+}
+
+.control:hover {
+    background-color: #03071e;
+    color: white;
+}
+
 .box {
     text-align: center;
     position: relative;
@@ -20,4 +50,37 @@
 
 .author {
     color: #03071e;
+}
+
+.question {
+    text-align: center;
+    color: #03071e;
+    margin: 1rem;
+}
+
+.options {
+    text-align: center;
+}
+
+.option {
+    border: 1px solid #03071e;
+    color: #03071e;
+    background-color: white;
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin: 1rem;
+}
+
+.score {
+    text-align: center;
+    color: #03071e;
+    margin: 5rem;
+}
+
+.return__div {
+    text-align: center;
+}
+
+.return {
+    margin: 1rem;
 }

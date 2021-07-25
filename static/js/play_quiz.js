@@ -89,23 +89,42 @@ class DoublyLinkedList {
 }
 
 function start() {
-	console.log("I was called...")
 	document.getElementsByClassName("box")[0].remove();
 	const buttonDiv = document.getElementById("buttons");
 
 	const newPrevButton = document.createElement("button");
-	const prevButtonText = document.createTextNode("prev");
-	newPrevButton.appendChild(prevButtonText);
+	const prevIcon = document.createElement("i");
+	prevIcon.classList.add("fas");
+	prevIcon.classList.add("fa-angle-left")
+	newPrevButton.appendChild(prevIcon);
 	newPrevButton.addEventListener("click", prevQuestion);
 	newPrevButton.id = "prev";
+	newPrevButton.classList.add("btn");
+	newPrevButton.classList.add("btn-lg");
+	newPrevButton.classList.add("control");
+
+	const submitButton = document.createElement("button");
+	const submitButtonText = document.createTextNode("submit");
+	submitButton.appendChild(submitButtonText);
+	submitButton.id = "submit"
+	submitButton.classList.add("btn");
+	submitButton.classList.add("btn-lg");
+	submitButton.classList.add("control");
+	submitButton.addEventListener("click", submit);
 
 	const newNextButton = document.createElement("button");
-	const nextButtonText = document.createTextNode("next");
-	newNextButton.appendChild(nextButtonText);
+	const nextIcon = document.createElement("i");
+	nextIcon.classList.add("fas");
+	nextIcon.classList.add("fa-angle-right");
+	newNextButton.appendChild(nextIcon);
 	newNextButton.addEventListener("click", nextQuestion);
 	newNextButton.id = "next";
+	newNextButton.classList.add("btn");
+	newNextButton.classList.add("btn-lg");
+	newNextButton.classList.add("control");
 
 	buttonDiv.appendChild(newPrevButton);
+	buttonDiv.appendChild(submitButton);
 	buttonDiv.appendChild(newNextButton);
 	displayQuiz();
 }
@@ -113,7 +132,6 @@ function start() {
 function displayQuiz() {
 	const root = document.getElementById("root");
 	const prevButton = document.getElementById("prev");
-	const nextButton = document.getElementById("next");
 	const question = ll.getCurrentQuestion();
 	const options = ll.getCurrentOptions();
 
@@ -123,10 +141,19 @@ function displayQuiz() {
 		}
 	}
 
+	if (!document.getElementById("submit").disabled) {
+		document.getElementById("submit").disabled = true;
+	}
+
 	const questionTag = document.createElement("h1");
 	const questionText = document.createTextNode(question);
+	questionTag.classList.add("question")
 	questionTag.appendChild(questionText);
 	root.appendChild(questionTag);
+
+	const optionsDiv = document.createElement("div");
+	optionsDiv.classList.add("options");
+	root.appendChild(optionsDiv);
 	let optionNodes = [];
 	
 	for (let i = 0; i < options.length; i++) {
@@ -143,14 +170,15 @@ function displayQuiz() {
 	}
 
 	for (let i = 0; i < optionNodes.length; i++) {
-		root.appendChild(optionNodes[i]);
+		optionsDiv.appendChild(optionNodes[i]);
 	}
 
 	addSelectingListeners();
 
 	if (!ll.prevExists()) {
-		prevButton.remove();
+		prevButton.disabled = true;
 	} else {
+		prevButton.disabled = false;
 		if (!document.getElementById("prev")) {
 			const prevButtonToAdd = document.createElement("button");
 			const prevText = document.createTextNode("prev");
@@ -162,15 +190,11 @@ function displayQuiz() {
 	}
 	if (ll.isEnd()) {
 		if (document.getElementById("next")) {
-			document.getElementById("next").remove();
+			document.getElementById("next").disabled = true;
 		}
-		const submitButton = document.createElement("button");
-		const submitText = document.createTextNode("Submit");
-		submitButton.id = "submit";
-		submitButton.addEventListener("click", submit);
-		submitButton.appendChild(submitText);
-		buttonsDiv.appendChild(submitButton);
+		document.getElementById("submit").disabled = false;
 	} else {
+		document.getElementById("next").disabled = false;
 		if (!document.getElementById("next")) {
 			const nextButtonToAdd = document.createElement("button");
 			const nextText = document.createTextNode("next");
@@ -209,23 +233,55 @@ function prevQuestion(e) {
 		ll.addAnswer(document.getElementById("selected").innerText);
 	}
 	if (document.getElementById("submit")) {
-		document.getElementById("submit").remove();
+		document.getElementById("submit").disabled = true;
 	}
 	ll.traversePreviousQuestion();
 	displayQuiz(ll);
 }
 
 function submit(e) {
+	const content = document.getElementById("content");
 	ll.addAnswer(document.getElementById("selected").innerText);
-	while (document.body.firstChild) {
-		document.body.removeChild(document.body.firstChild);
+	while (content.firstChild) {
+		content.removeChild(content.firstChild);
 	}
 	const score = document.createElement("h1");
 	const scoreText = document.createTextNode(`You Scored ${ll.getScore()}/${ll.getLength()}`);
+	const dashboardButton = document.createElement("button");
+	const dahsboardText = document.createTextNode("Dahsboard");
+	dashboardButton.appendChild(dahsboardText);
+	dashboardButton.classList.add("btn");
+	dashboardButton.classList.add("return");
+	dashboardButton.classList.add("btn-lg");
+	dashboardButton.classList.add("btn-outline-warning");
+	dashboardButton.addEventListener("click", redirectDahsboard);
+	const browseButton = document.createElement("button");
+	const browseText = document.createTextNode("Browse");
+	browseButton.appendChild(browseText);
+	browseButton.classList.add("btn");
+	browseButton.classList.add("return");
+	browseButton.classList.add("btn-lg");
+	browseButton.classList.add("btn-outline-warning");
+	browseButton.addEventListener("click", redirectBrowse);
+	score.classList.add("score");
 	score.appendChild(scoreText);
-	document.body.appendChild(score);
+	content.appendChild(score);
+	const returnButtonsDiv = document.createElement("div")
+	returnButtonsDiv.classList.add("return__div");
+	returnButtonsDiv.appendChild(dashboardButton);
+	returnButtonsDiv.appendChild(browseButton);
+	content.appendChild(returnButtonsDiv);
 }
 
+function redirectDahsboard(e) {
+	window.location.href = "/dashboard";
+}
+
+function redirectBrowse(e) {
+	window.location.href = "/browse";
+}
+
+// Data to be fetched from backend
 data = [
     {
         "What is 1 + 1?": {
