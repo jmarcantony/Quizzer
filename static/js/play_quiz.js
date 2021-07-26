@@ -13,6 +13,7 @@ class DoublyLinkedList {
         this.score = {};
     }
 
+	// Adds Question Objects to Linked List as Nodes from Fetched Quiz Data
     createQuiz(data) {
         for (let i = 0; i < data.length; i++) {
             if (!this.head) {
@@ -30,6 +31,7 @@ class DoublyLinkedList {
         }
     }
 
+	// Gets Length Of Linked List
 	getLength() {
 		let len = 0;
 		let itr = this.head;
@@ -40,34 +42,42 @@ class DoublyLinkedList {
 		return len;
 	}
 
+	// Traverses To The Next Question
     traverseNextQuestion() {
         this.curr = this.curr.next;
     }
 
+	// Traverses To The Previous Question
     traversePreviousQuestion() {
         this.curr = this.curr.prev;
     }
 
+	// Gets Question from Current Node
     getCurrentQuestion() {
         return Object.keys(this.curr.val)[0];
     }
 
+	// Gets Options of Current Question
     getCurrentOptions() {
         return Object.keys(this.curr.val[this.getCurrentQuestion()]);
     }
 
+	// Checks If There Is a Next Node
     isEnd() {
         return this.curr.next == null ? true : false;
     }
 
+	// Checks If There Is a Previous Node
 	prevExists() {
 		return this.curr.prev == null ? false : true;
 	}
 
+	// Adds User Answer to Score Object
 	addAnswer(answer) {
 		this.score[this.getCurrentQuestion()] = answer;
 	}
 
+	// Method to Get Total Score of User
 	getScore() {
 		const keys = Object.keys(this.score);
 		let scored = 0;
@@ -89,9 +99,13 @@ class DoublyLinkedList {
 }
 
 function start() {
+	// Clears Content
 	document.getElementsByClassName("box")[0].remove();
+
+	// Gets Button Div For Previous, Submit and Next Buttons
 	const buttonDiv = document.getElementById("buttons");
 
+	// Creating and Styling Prev Button
 	const newPrevButton = document.createElement("button");
 	const prevIcon = document.createElement("i");
 	prevIcon.classList.add("fas");
@@ -103,6 +117,7 @@ function start() {
 	newPrevButton.classList.add("btn-lg");
 	newPrevButton.classList.add("control");
 
+	// Creating and Styling Submit Button
 	const submitButton = document.createElement("button");
 	const submitButtonText = document.createTextNode("submit");
 	submitButton.appendChild(submitButtonText);
@@ -112,6 +127,7 @@ function start() {
 	submitButton.classList.add("control");
 	submitButton.addEventListener("click", submit);
 
+	// Creating and Styling Next Button
 	const newNextButton = document.createElement("button");
 	const nextIcon = document.createElement("i");
 	nextIcon.classList.add("fas");
@@ -123,12 +139,16 @@ function start() {
 	newNextButton.classList.add("btn-lg");
 	newNextButton.classList.add("control");
 
+	// Adding Created Buttons to Button Div
 	buttonDiv.appendChild(newPrevButton);
 	buttonDiv.appendChild(submitButton);
 	buttonDiv.appendChild(newNextButton);
+
+	// Starts Quiz
 	displayQuiz();
 }
 
+// Function to display question and options
 function displayQuiz() {
 	const root = document.getElementById("root");
 	const prevButton = document.getElementById("prev");
@@ -213,6 +233,15 @@ function addSelectingListeners() {
 	}
 }
 
+// Event Listeners
+function redirectDahsboard(e) {
+	window.location.href = "/dashboard";
+}
+
+function redirectBrowse(e) {
+	window.location.href = "/browse";
+}
+
 function selectOption(e) {
 	if (document.getElementById("selected")) {
 		document.getElementById("selected").id = "";
@@ -241,22 +270,27 @@ function prevQuestion(e) {
 
 function submit(e) {
 	const content = document.getElementById("content");
-	ll.addAnswer(document.getElementById("selected").innerText);
-	while (content.firstChild) {
-		content.removeChild(content.firstChild);
-	}
 	const score = document.createElement("h1");
 	const scoreText = document.createTextNode(`You Scored ${ll.getScore()}/${ll.getLength()}`);
 	const dashboardButton = document.createElement("button");
 	const dahsboardText = document.createTextNode("Dahsboard");
+	const browseButton = document.createElement("button");
+	const browseText = document.createTextNode("Browse");
+	const returnButtonsDiv = document.createElement("div")
+
+	// Adds Final Answer To Score Object
+	ll.addAnswer(document.getElementById("selected").innerText);
+	while (content.firstChild) {
+		content.removeChild(content.firstChild);
+	}
+
+	// Styles Created Elements by Adding Classes and Adds Event Listeners
 	dashboardButton.appendChild(dahsboardText);
 	dashboardButton.classList.add("btn");
 	dashboardButton.classList.add("return");
 	dashboardButton.classList.add("btn-lg");
 	dashboardButton.classList.add("btn-outline-warning");
 	dashboardButton.addEventListener("click", redirectDahsboard);
-	const browseButton = document.createElement("button");
-	const browseText = document.createTextNode("Browse");
 	browseButton.appendChild(browseText);
 	browseButton.classList.add("btn");
 	browseButton.classList.add("return");
@@ -266,22 +300,18 @@ function submit(e) {
 	score.classList.add("score");
 	score.appendChild(scoreText);
 	content.appendChild(score);
-	const returnButtonsDiv = document.createElement("div")
 	returnButtonsDiv.classList.add("return__div");
+
+	// Adds Created Dashboard Button & Browse Button to Buttons Div
 	returnButtonsDiv.appendChild(dashboardButton);
 	returnButtonsDiv.appendChild(browseButton);
+
+	// Adds Buttons Div To Content
 	content.appendChild(returnButtonsDiv);
 }
 
-function redirectDahsboard(e) {
-	window.location.href = "/dashboard";
-}
 
-function redirectBrowse(e) {
-	window.location.href = "/browse";
-}
-
-// Data to be fetched from backend
+// NOTE: The Following is Dummy Data for Testing Purpouses, actual Data to be fetched from backend
 data = [
     {
         "What is 1 + 1?": {
@@ -309,5 +339,5 @@ data = [
     }
 ]
 
-ll = new DoublyLinkedList();
-ll.createQuiz(data);
+ll = new DoublyLinkedList(); // Creates New DoublyLinkedList 
+ll.createQuiz(data); // Creates Linked List
