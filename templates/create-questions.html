@@ -7,6 +7,31 @@
 {% endblock %}
 
 {% block content %}
+	<div id="root">
+		<div class="question">
+			<h1 class="question__heading">Question 1</h1>
+			<div class="option__div">
+				<input type="text" placeholder="Question 1" id="question1" class="question__input">
+			</div>
+			<div class="option__div">
+				<input type="text" placeholder="Option 1" id="question1option1" class="option__input">
+				<div class="radio question1"></div>
+			</div>
+			<div class="option__div">
+				<input type="text" placeholder="Option 2" id="question1option2" class="option__input">
+				<div class="radio question1"></div>
+			</div>
+			<div class="option__div">
+				<input type="text" placeholder="Option 3" id="question1option3" class="option__input">
+				<div class="radio question1"></div>
+			</div>
+			<div class="option__div">
+				<input type="text" placeholder="Option 4" id="question1option4" class="option__input">
+				<div class="radio question1"></div>
+			</div>
+		</div>
+	</div>
+	<div class="add__button"><i class="fas fa-plus"></i></div>
 {% endblock %}
 
 {% block scripts %}
