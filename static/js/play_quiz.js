@@ -273,7 +273,7 @@ function submit(e) {
 	const content = document.getElementById("content");
 	const score = document.createElement("h1");
 	const dashboardButton = document.createElement("button");
-	const dahsboardText = document.createTextNode("Dahsboard");
+	const dahsboardText = document.createTextNode("Dashboard");
 	const browseButton = document.createElement("button");
 	const browseText = document.createTextNode("Browse");
 	const returnButtonsDiv = document.createElement("div")
