@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, logout_user, current_user, login_user, LoginManager, UserMixin
 
 # META VARIABLES
@@ -138,15 +138,6 @@ def create():
         if thumbnail.strip() == "":
             thumbnail = "https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_960_720.jpg"
         return redirect(url_for("create_questions", name=name, thumbnail=thumbnail, author=author))
-        # name = request.form["quiz_name"]
-        # thumbnail = request.form["thumbnail"]
-        # author = User.query.get(int(current_user.get_id())).username
-        # if thumbnail.strip() == "":
-            # thumbnail = "https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_960_720.jpg"
-        # new_quiz = Quiz(name=name, thumbnail=thumbnail, author=author)
-        # db.session.add(new_quiz)
-        # db.session.commit()
-        # return render_template("success.html")
     return render_template("create.html")
 
 
@@ -160,6 +151,23 @@ def create_questions():
         if current_user.username != author:
             return render_template("notfound.html"), 404
         return render_template("create-questions.html") 
+    try:
+        questions = request.json
+        name = request.args.get("name")
+        thumbnail = request.args.get("thumbnail")
+        author = current_user.username
+        new_quiz = Quiz(name=name, thumbnail=thumbnail, author=author, total_questions=len(questions), questions=questions)
+        db.session.add(new_quiz)
+        db.session.commit()
+        return "success", 200
+    except:
+        return "fail", 500
+
+@app.route("/success")
+@login_required
+def success():
+    return render_template("success.html")
+
     
 
 @app.route("/quiz/<int:id>")
@@ -170,6 +178,12 @@ def start_quiz(id):
         return render_template("play_quiz.html", quiz=quiz)
     else:
         return render_template("notfound.html"), 404
+
+@app.route("/getquiz/<int:id>")
+@login_required
+def send_data(id):
+    quiz = Quiz.query.get(id)
+    return jsonify(questions=quiz.questions)
 
 
 # Error Handling

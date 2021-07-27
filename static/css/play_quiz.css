@@ -1,3 +1,8 @@
+#json {
+    position: absolute;
+    visibility: hidden;
+}
+
 #selected {
     background-color: #03071e;
     border: none;

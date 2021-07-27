@@ -7,6 +7,16 @@ input {
 	width: 70vw;
 }
 
+#create__button {
+	border: 1px solid #03071e;
+	color: #03071e;
+}
+
+#create__button:hover {
+	background-color: #03071e;
+	color: white;
+}
+
 #selected {
 	background-color: #03071e;
 }

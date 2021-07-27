@@ -269,9 +269,9 @@ function prevQuestion(e) {
 }
 
 function submit(e) {
+
 	const content = document.getElementById("content");
 	const score = document.createElement("h1");
-	const scoreText = document.createTextNode(`You Scored ${ll.getScore()}/${ll.getLength()}`);
 	const dashboardButton = document.createElement("button");
 	const dahsboardText = document.createTextNode("Dahsboard");
 	const browseButton = document.createElement("button");
@@ -283,6 +283,8 @@ function submit(e) {
 	while (content.firstChild) {
 		content.removeChild(content.firstChild);
 	}
+
+	const scoreText = document.createTextNode(`You Scored ${ll.getScore()}/${ll.getLength()}`);
 
 	// Styles Created Elements by Adding Classes and Adds Event Listeners
 	dashboardButton.appendChild(dahsboardText);
@@ -310,34 +312,11 @@ function submit(e) {
 	content.appendChild(returnButtonsDiv);
 }
 
-
-// NOTE: The Following is Dummy Data for Testing Purpouses, actual Data to be fetched from backend
-data = [
-    {
-        "What is 1 + 1?": {
-            "2": true,
-            "1": false,
-            "3": false,
-            "6": false
-        }
-    },
-    {
-        "What is 2 + 4": {
-            "5": false,
-            "8": false,
-            "6": true,
-            "2": false,
-        }
-    },
-    {
-        "Who is the CEO of google?": {
-            "Jeff Bezos": false,
-            "Elon Musk": false,
-            "Sundar Pichai": true,
-            "Ronald McDonald": false,
-        }
-    }
-]
+let uncleanedData = document.getElementById("json").innerHTML
+let cleanedData = uncleanedData.replaceAll("'", `"`);
+cleanedData = cleanedData.replaceAll("False", "false");
+cleanedData = cleanedData.replaceAll("True", "true");
+let data = JSON.parse(cleanedData);
 
 ll = new DoublyLinkedList(); // Creates New DoublyLinkedList 
 ll.createQuiz(data); // Creates Linked List

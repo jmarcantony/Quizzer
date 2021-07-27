@@ -36,7 +36,8 @@ function createForm() {
 
 		// Config Radio Button
 		radio.classList.add("radio");
-		radio.classList.add(`question${createdQuestions+1}`);
+		radio.classList.add(`question${createdQuestions}`);
+		radio.classList.add(`question${createdQuestions}option${i+1}radio`);
 
 		// Adding Input and Radio Button to Input Div
 		optionDiv.appendChild(optionInput);
@@ -64,6 +65,40 @@ function createForm() {
     document.getElementById("footer").style.bottom = "-19vh";
 
 	createdQuestions++;
+	handleCreateButton();
+}
+
+function createData() {
+	let questions = [];
+	for (let i = 0; i < createdQuestions - 1; i++) {
+		let question = document.getElementById(`question${i+1}`).value;
+		let toAdd = {};
+		let options = {};
+		for (let j = 0; j < 4; j++) {
+			let option = document.getElementById(`question${i+1}option${j+1}`);
+			let optionText = option.value;
+			let correctAnswer = document.getElementsByClassName(`question${i+1}option${j+1}radio`)[0].id == "selected" ? true : false;
+			options[optionText] = correctAnswer;
+		}
+		toAdd[question] = options;
+		questions.push(toAdd);
+	}
+	return questions;
+}
+
+function sendData() {
+	const questions = createData();
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST", window.location.href, true);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(JSON.stringify(questions));
+	xhr.onreadystatechange = e => {
+		if (xhr.responseText == "success") {
+			window.location.href = "/success";
+		} else {
+			window.location.href = "/fail";
+		};
+	}
 }
 
 function select(e) {
@@ -71,9 +106,12 @@ function select(e) {
 	for (let i = 0; i < radios.length; i++) {
 		if (radios[i].id == "selected") {
 			radios[i].id = "";
+			radios[i].classList.remove("selected");
 		}
 	}
 	e.target.id = "selected";
+	e.target.classList.add("selected");
+	handleCreateButton();
 }
 
 function addListeners() {
@@ -88,7 +126,17 @@ function fixFooter() {
     document.getElementById("footer").style.bottom = "0";
 }
 
+function handleCreateButton() {
+	const createButton = document.getElementById("create__button");
+	if (document.getElementsByClassName("selected").length != createdQuestions - 1) {
+		createButton.disabled = true;
+	} else {
+		createButton.disabled = false
+	}
+}
+
 fixFooter();
 
 let createdQuestions = 2;
 addListeners();
+handleCreateButton();
