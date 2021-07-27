@@ -10,9 +10,7 @@
 	<div id="root">
 		<div class="question">
 			<h1 class="question__heading">Question 1</h1>
-			<div class="option__div">
-				<input type="text" placeholder="Question 1" id="question1" class="question__input">
-			</div>
+			<input type="text" placeholder="Question 1" id="question1" class="question__input">
 			<div class="option__div">
 				<input type="text" placeholder="Option 1" id="question1option1" class="option__input">
 				<div class="radio question1"></div>
@@ -31,7 +29,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="add__button"><i class="fas fa-plus"></i></div>
+	<div onclick="createForm()" class="add__button"><i class="fas fa-plus"></i></div>
 {% endblock %}
 
 {% block scripts %}
