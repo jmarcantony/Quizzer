@@ -1,7 +1,7 @@
 # Quizzer
 Quiz Web App with Python 🌐
 
-<!-- ## Quizzer: [URL After Deployed] -->
+## Quizzer: https://shrouded-scrubland-38991.herokuapp.com/
 
 ## Written in python 3.9.4
 
