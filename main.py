@@ -179,13 +179,6 @@ def start_quiz(id):
         return render_template("notfound.html"), 404
 
 
-@app.route("/getquiz/<int:id>")
-@login_required
-def send_data(id):
-    quiz = Quiz.query.get(id)
-    return jsonify(questions=quiz.questions)
-
-
 @app.route("/delete/<int:id>")
 @login_required
 def delete_quiz(id):
