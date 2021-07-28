@@ -173,11 +173,11 @@ def success():
 @login_required
 def start_quiz(id):
     quiz = Quiz.query.get(id)
-    if quiz:
-        return render_template("play_quiz.html", quiz=quiz)
-    else:
+    
+    if not quiz:
         return render_template("notfound.html"), 404
-
+    
+    return render_template("play_quiz.html", quiz=quiz)
 
 @app.route("/delete/<int:id>")
 @login_required
