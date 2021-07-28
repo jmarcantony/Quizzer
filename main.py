@@ -161,23 +161,23 @@ def create_questions():
             return "success", 200
         except:
             return "fail", 500
-
-
-@app.route("/success")
+        
+        
+@app.route("/edit/<int:id>")
 @login_required
-def success():
-    return render_template("success.html")
-   
+def edit_quiz(id):
+    quiz_to_update = Quiz.query.get(id)
+    return render_template('create-questions.html', questions=quiz_to_update.questions)
+
 
 @app.route("/quiz/<int:id>")
 @login_required
 def start_quiz(id):
     quiz = Quiz.query.get(id)
-    
     if not quiz:
         return render_template("notfound.html"), 404
-    
     return render_template("play_quiz.html", quiz=quiz)
+
 
 @app.route("/delete/<int:id>")
 @login_required
@@ -186,6 +186,12 @@ def delete_quiz(id):
     db.session.delete(quiz_to_delete)
     db.session.commit()
     return redirect(url_for('dashboard'))
+
+
+@app.route("/success")
+@login_required
+def success():
+    return render_template("success.html")
 
 
 # Error Handling

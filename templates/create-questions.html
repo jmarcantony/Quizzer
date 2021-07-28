@@ -9,24 +9,45 @@
 {% block content %}
 	<div id="root">
 		<div class="question">
-			<h1 class="question__heading">Question 1</h1>
-			<input type="text" placeholder="Question 1" id="question1" class="question__input">
-			<div class="option__div">
-				<input type="text" placeholder="Option 1" id="question1option1" class="option__input">
-				<div class="radio question1 question1option1radio"></div>
-			</div>
-			<div class="option__div">
-				<input type="text" placeholder="Option 2" id="question1option2" class="option__input">
-				<div class="radio question1 question1option2radio"></div>
-			</div>
-			<div class="option__div">
-				<input type="text" placeholder="Option 3" id="question1option3" class="option__input">
-				<div class="radio question1 question1option3radio"></div>
-			</div>
-			<div class="option__div">
-				<input type="text" placeholder="Option 4" id="question1option4" class="option__input">
-				<div class="radio question1 question1option4radio"></div>
-			</div>
+			{% if questions: %}
+				{% for i in range(questions|length): %}
+					<h1 class="question__heading">Question {{i+1}}</h1>
+					{% for question, answer in questions[i].items(): %}
+						<input type="text" value="{{question}}" placeholder="Question {{i+1}}" id="question{{i+1}}" class="question__input">
+
+						{% for option, bool in answer.items(): %}
+							<div class="option__div">
+								<input type="text" value="{{option}}" placeholder="Option {{loop.index}}" id="question{{i+1}}option{{loop.index}}" class="option__input">
+								{% if bool == True: %}
+									<div class="radio question{{i+1}} question{{i+1}}option{{loop.index}}radio selected" id="selected"></div>
+								{% else: %}
+									<div class="radio question{{i+1}} question{{i+1}}option{{loop.index}}radio"></div>
+								{% endif %}
+							</div>
+						{% endfor %}
+					{% endfor %}
+				{% endfor %}
+
+			{% else: %}		
+				<h1 class="question__heading">Question 1</h1>
+				<input type="text" placeholder="Question 1" id="question1" class="question__input">
+				<div class="option__div">
+					<input type="text" placeholder="Option 1" id="question1option1" class="option__input">
+					<div class="radio question1 question1option1radio"></div>
+				</div>
+				<div class="option__div">
+					<input type="text" placeholder="Option 2" id="question1option2" class="option__input">
+					<div class="radio question1 question1option2radio"></div>
+				</div>
+				<div class="option__div">
+					<input type="text" placeholder="Option 3" id="question1option3" class="option__input">
+					<div class="radio question1 question1option3radio"></div>
+				</div>
+				<div class="option__div">
+					<input type="text" placeholder="Option 4" id="question1option4" class="option__input">
+					<div class="radio question1 question1option4radio"></div>
+				</div>
+			{% endif %}
 		</div>
 	</div>
 	<div onclick="createForm()" class="add__button"><i class="fas fa-plus"></i></div>
