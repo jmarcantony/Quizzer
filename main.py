@@ -186,6 +186,15 @@ def send_data(id):
     return jsonify(questions=quiz.questions)
 
 
+@app.route("/delete/<int:id>")
+@login_required
+def delete_quiz(id):
+    quiz_to_delete = Quiz.query.get(id)
+    db.session.delete(quiz_to_delete)
+    db.session.commit()
+    return redirect(url_for('dashboard'))
+
+
 # Error Handling
 @app.errorhandler(404)
 def not_found(e):

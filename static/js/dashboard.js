@@ -2,6 +2,10 @@ function create() {
     window.location.href = "/create";
 }
 
+function delete_quiz(quiz_id) {
+    window.location.href = "/delete/" + quiz_id;
+}
+
 function fix() {
     const footer = document.getElementById("footer");
     const create = document.getElementById("create");
