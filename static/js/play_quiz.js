@@ -42,6 +42,16 @@ class DoublyLinkedList {
 		return len;
 	}
 
+	getIndex() {
+		let index = 0;
+		let itr = this.head;
+		while (itr != this.curr && itr) {
+			index++;
+			itr = itr.next;
+		}
+		return index + 1;
+	}
+
 	// Traverses To The Next Question
     traverseNextQuestion() {
         this.curr = this.curr.next;
@@ -193,7 +203,18 @@ function displayQuiz() {
 		optionsDiv.appendChild(optionNodes[i]);
 	}
 
+	while (document.getElementById("progress").firstChild) {
+		document.getElementById("progress").removeChild(document.getElementById("progress").firstChild);
+	}
+
+	const progress = document.createElement("h2");
+	const progressText = document.createTextNode(`Question ${ll.getIndex()}/${ll.getLength()}`);
+	progress.appendChild(progressText);
+	progress.classList.add("quiz__progress");
+	document.getElementById("progress").appendChild(progress);
+
 	addSelectingListeners();
+
 
 	if (!ll.prevExists()) {
 		prevButton.disabled = true;

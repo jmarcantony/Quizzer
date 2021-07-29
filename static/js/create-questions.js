@@ -101,6 +101,21 @@ function sendData() {
 	}
 }
 
+function editData() {
+	const questions = createData();
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST", window.location.href, true);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(JSON.stringify(questions));
+	xhr.onreadystatechange = e => {
+		if (xhr.responseText == "success") {
+			window.location.href = "/success";
+		} else {
+			window.location.href = "/fail";
+		};
+	}
+}
+
 function select(e) {
 	const radios = document.getElementsByClassName(e.target.classList[1]);
 	for (let i = 0; i < radios.length; i++) {
@@ -143,7 +158,10 @@ if (window.location.href.includes("/edit")) {
 	fixFooter();
 }
 
-let createdQuestions = 2;
+let createdQuestions = document.getElementsByClassName("question__heading").length == 0 ? 2 : document.getElementsByClassName("question__heading").length + 1;
 
 addListeners();
-handleCreateButton();
+
+if (!window.location.href.includes("/edit")) {
+	handleCreateButton();
+}

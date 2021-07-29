@@ -1,8 +1,3 @@
-#json {
-    position: absolute;
-    visibility: hidden;
-}
-
 #selected {
     background-color: #03071e;
     border: none;
@@ -11,6 +6,11 @@
 
 #buttons {
     text-align: center;
+}
+
+.info {
+    position: absolute;
+    visibility: hidden;
 }
 
 .control {
@@ -88,4 +88,10 @@
 
 .return {
     margin: 1rem;
+}
+
+.quiz__progress {
+    color: #03071e;
+    margin-top: 10vh;
+    text-align: center;
 }

@@ -151,7 +151,7 @@ def create_questions():
     if request.method == "GET":
         if current_user.username != author:
             return render_template("notfound.html"), 404
-        return render_template("create-questions.html") 
+        return render_template("create-questions.html", action="create") 
     else:
         try:
             questions = request.json
@@ -163,12 +163,21 @@ def create_questions():
             return "fail", 500
         
         
-@app.route("/edit/<int:id>")
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_quiz(id):
     quiz_to_update = Quiz.query.get(id)
-    return render_template('create-questions.html', questions=quiz_to_update.questions)
-
+    if request.method == "GET":
+        return render_template('create-questions.html', questions=quiz_to_update.questions, action="edit")
+    try:
+        updated_questions = request.json
+        quiz_to_update.total_questions = len(updated_questions)
+        quiz_to_update.questions = updated_questions
+        db.session.commit()
+        return "success", 200
+    except Exception as e:
+        print(e)
+        return "fail", 500
 
 @app.route("/quiz/<int:id>")
 @login_required

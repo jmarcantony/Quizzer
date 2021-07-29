@@ -52,7 +52,11 @@
 	</div>
 	<div onclick="createForm()" class="add__button"><i class="fas fa-plus"></i></div>
 	<center>
-		<button onclick="sendData()" id="create__button" class="btn btn-lg btn-outline-warning">Create</button>
+		{% if action == "create" %}
+			<button onclick="sendData()" id="create__button" class="btn btn-lg btn-outline-warning">Create</button>
+		{% else %}
+			<button onclick="editData()" id="create__button" class="btn btn-lg btn-outline-warning">Edit</button>
+		{% endif %}
 	</center>
 {% endblock %}
 

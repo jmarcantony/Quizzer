@@ -6,6 +6,10 @@ function delete_quiz(quiz_id) {
     window.location.href = "/delete/" + quiz_id;
 }
 
+function edit_quiz(quiz_id) {
+    window.location.href = "/edit/" + quiz_id;
+}
+
 function fix() {
     const footer = document.getElementById("footer");
     const create = document.getElementById("create");

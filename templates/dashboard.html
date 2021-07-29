@@ -19,7 +19,8 @@
                         </div>
                         <h4>Name: {{ quiz.name }}</h4>
                         <p>Author: {{ quiz.author }}</p>
-                        <div class="delete" onclick="delete_quiz('{{quiz.id}}')" id="delete"><i class="fas fa-trash"></i></div>
+                        <div class="control__button" onclick="delete_quiz('{{quiz.id}}')"><i class="fas fa-trash"></i></div>
+                        <div class="control__button" onclick="edit_quiz('{{quiz.id}}')"><i class="fas fa-pencil-alt"></i></div>
                     </div>    
                 {% endfor %}
             </center>

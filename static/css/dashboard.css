@@ -21,6 +21,10 @@
     border-radius: 10px;
 }
 
+.control__button {
+    display: inline;
+}
+
 .quizes-title {
     color: #03071e;
     margin: 1em;
