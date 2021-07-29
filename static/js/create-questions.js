@@ -135,8 +135,15 @@ function handleCreateButton() {
 	}
 }
 
-fixFooter();
+if (window.location.href.includes("/edit")) {
+	if (document.getElementsByClassName("question__heading").length == 1) {
+		fixFooter();
+	}
+} else {
+	fixFooter();
+}
 
 let createdQuestions = 2;
+
 addListeners();
 handleCreateButton();
